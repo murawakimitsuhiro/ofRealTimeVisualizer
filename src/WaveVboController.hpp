@@ -8,12 +8,12 @@
 #pragma once
 
 #include "common.h"
+#include "ofxTween.h"
 
 #ifndef WaveVboController_hpp
 #define WaveVboController_hpp
 
 class WaveVboController{
-    /* 波の起点(ここのクラスで波の広がりの計算などを扱う */
     class StaringPoint{
     private:
         float existanceTime;

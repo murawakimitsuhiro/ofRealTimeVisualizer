@@ -8,8 +8,6 @@
 
 #include "WaveVboController.hpp"
 
-#include "ofMain.h"
-
 WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofVbo &vbo, DebugOutput &debugTarget){
     this->size = meshSize;
     this->locationVectors = new ofVec3f[meshSize.getArea()];
