@@ -10,6 +10,7 @@
 
 WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofVbo &vbo, DebugOutput &debugTarget){
     this->size = meshSize;
+    this->baseColor = ofFloatColor(0.5, 0.8, 1.0, 1.0);
     this->locationVectors = new ofVec3f[meshSize.getArea()];
     this->velocityVectors = new ofVec3f[meshSize.getArea()];
     this->colors = new ofFloatColor[meshSize.getArea()];
@@ -44,35 +45,48 @@ void WaveVboController::update(){
 }
 
 void WaveVboController::emitStaringPoint(ofPoint point, float height, float radius, ofFloatColor color){
-    staringPoints.push_back(StaringPoint(point, height, radius, color));
+    staringPoints.push_back(StaringPoint(point, height, radius, color, this));
 }
 
-WaveVboController::StaringPoint::StaringPoint(ofPoint point, float height, float radius, ofFloatColor color){
+WaveVboController::StaringPoint::StaringPoint(ofPoint point, float height, float radius, ofFloatColor color, WaveVboController* controller){
     this->point = point;
     this->height = height;
     this->radius = radius;
     this->gradients = cordinateMath::gradientsOfQuadraticCurve(radius, height);
     this->color = color;
     
+    const float animDuration = 0.01 * height;
+    const AnimCurve animCurve = BOUNCE_IN_CUSTOM;
+    const AnimRepeat animRepeat = LOOP_BACK_AND_FORTH_ONCE;
+    
     animate.reset(0);
-    animate.setDuration(0.01 * height);
-    animate.setCurve(BOUNCE_IN_CUSTOM);
-    animate.setRepeatType(LOOP_BACK_AND_FORTH_ONCE);
+    animate.setDuration(animDuration);
+    animate.setCurve(animCurve);
+    animate.setRepeatType(animRepeat);
     animate.animateTo(height);
+    
+    colorAnimate.setColor(controller->baseColor);
+    colorAnimate.setDuration(animDuration);
+    colorAnimate.setCurve(animCurve);
+    colorAnimate.setRepeatType(animRepeat);
+    colorAnimate.animateToIfFinished(color);
 }
 
 void WaveVboController::StaringPoint::update(WaveVboController* controller){
     animate.update(1.0f/60.0f);
+    colorAnimate.update(1.0f/60.0f);
     
     for (int i = 0; i < controller->size.width; i++) {
         for (int j = 0; j < controller->size.height; j++) {
-            const int currentPointNum = j * controller->size.width + i;
-            const float distanceFromStaring = cordinateMath::distancece(controller->locationVectors[currentPointNum], this->point);
+            const int currentNum = j * controller->size.width + i;
+            const float distanceFromStaring = cordinateMath::distancece(controller->locationVectors[currentNum], this->point);
             
             if (distanceFromStaring < radius){
                 const float cordinateY = gradients * distanceFromStaring * distanceFromStaring + height;
                 const float ratioHeight = cordinateY / height;
-                controller->locationVectors[currentPointNum].y = animate.getCurrentValue() * ratioHeight;
+                
+                controller->colors[currentNum] = colorAnimate.getCurrentColor();
+                controller->locationVectors[currentNum].y = animate.getCurrentValue() * ratioHeight;
             }
         }
     }

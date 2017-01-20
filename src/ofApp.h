@@ -2,7 +2,7 @@
 
 #include "common.h"
 #include "WaveVboController.hpp"
-#include "ofxTween.h"
+#include "ofxXmlSettings.h"
 
 #define WAVE_WIDTH 200
 #define WAVE_HEIGHT 200
@@ -17,8 +17,9 @@ public:
     
 private:
     DebugOutput debugOutput;
-	ofEasyCam cam; // カメラ
-	ofVbo myVbo; // VBO
+	ofEasyCam cam;
+	ofVbo myVbo; 
     
     WaveVboController wave;
+    ofxXmlSettings xmlSettings;
 };

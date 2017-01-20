@@ -9,6 +9,7 @@
 
 #include "common.h"
 #include "ofxAnimatableFloat.h"
+#include "ofxAnimatableOfColor.h"
 
 #ifndef WaveVboController_hpp
 #define WaveVboController_hpp
@@ -22,14 +23,16 @@ class WaveVboController{
         float gradients;
         ofFloatColor color;
         ofxAnimatableFloat animate;
+        ofxAnimatableOfColor colorAnimate;
     public:
-        StaringPoint(ofPoint point, float height, float radius, ofFloatColor color);
+        StaringPoint(ofPoint point, float height, float radius, ofFloatColor color, WaveVboController* controller);
         void update(WaveVboController*);
         float planeDistance(ofPoint);
     };
 private:
     ofSize size;
     ofPoint point;
+    ofFloatColor baseColor;
     ofVec3f *locationVectors;
     ofVec3f *velocityVectors;
     ofFloatColor *colors;
