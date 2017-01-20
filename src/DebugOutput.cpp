@@ -19,5 +19,7 @@ void DebugOutput::drawPropaty(){
         infoText += "\n" + itr->first + " : " + itr->second;
     }
     
-    ofDrawBitmapString(infoText, 30, 30);
+    if (isOutput){
+        ofDrawBitmapString(infoText, 30, 30);
+    }
 }

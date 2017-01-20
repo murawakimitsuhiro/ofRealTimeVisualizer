@@ -8,7 +8,6 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
-    
     debugOutput.setPropaty("FPS", ofToString(ofGetFrameRate(), 2));
     
     wave.update();
@@ -18,6 +17,7 @@ void ofApp::draw(){
     
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+    
     
     cam.begin();
     glPointSize(0.5);
@@ -30,9 +30,12 @@ void ofApp::draw(){
 }
 
 void ofApp::keyPressed(int key){
+    cout << key << endl;
     
-    // fキーでフルスクリーン表示
     if (key == 'f') {
         ofToggleFullscreen();
+    }
+    if (key == 'h') {
+        this->wave.emitStaringPoint(ofPoint(0, 0), 20, 25, ofFloatColor(1.0, 1.0, 1.0, 1.0));
     }
 }

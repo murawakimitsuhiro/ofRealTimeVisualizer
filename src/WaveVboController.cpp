@@ -36,35 +36,52 @@ WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofVbo 
 void WaveVboController::update(){
     debug->setPropaty("vertexNum", ofToString(size.width*size.height, 0));
     
-    updateLocation();
-}
-
-void WaveVboController::updateLocation(){
-    for (int i = 0; i < size.width; i++) {
-        for (int j = 0; j < size.height; j++) {
-            //ここの点を制御
-            locationVectors[j * size.width + i] += velocityVectors[j * size.width + i];
-        }
+    for (int i=0; i<staringPoints.size(); i++){
+        staringPoints[i].update(this);
     }
     
     vbo->updateVertexData(locationVectors, size.getArea());
 }
 
-void WaveVboController::emitStaringPoint(Point point, float height, float radius, ofFloatColor color){
+void WaveVboController::emitStaringPoint(ofPoint point, float height, float radius, ofFloatColor color){
+    staringPoints.push_back(StaringPoint(point, height, radius, color));
 }
 
-WaveVboController::StaringPoint::StaringPoint(Point point, float height, float radius, ofFloatColor color){
+WaveVboController::StaringPoint::StaringPoint(ofPoint point, float height, float radius, ofFloatColor color){
     this->point = point;
     this->height = height;
     this->radius = radius;
+    this->gradients = cordinateMath::gradientsOfQuadraticCurve(radius, height);
     this->color = color;
     
-    this->existanceTime = height;
+    animate.reset(0);
+    animate.setDuration(0.01 * height);
+    animate.setCurve(BOUNCE_IN_CUSTOM);
+    animate.setRepeatType(LOOP_BACK_AND_FORTH_ONCE);
+    animate.animateTo(height);
 }
 
-void WaveVboController::StaringPoint::update(){
-    //影響のあるポイントとその値をセットする(べき)
+void WaveVboController::StaringPoint::update(WaveVboController* controller){
+    animate.update(1.0f/60.0f);
     
-   
-    this->existanceTime -= 1.0;
+    for (int i = 0; i < controller->size.width; i++) {
+        for (int j = 0; j < controller->size.height; j++) {
+            const int currentPointNum = j * controller->size.width + i;
+            const float distanceFromStaring = cordinateMath::distancece(controller->locationVectors[currentPointNum], this->point);
+            
+            if (distanceFromStaring < radius){
+                const float cordinateY = gradients * distanceFromStaring * distanceFromStaring + height;
+                const float ratioHeight = cordinateY / height;
+                controller->locationVectors[currentPointNum].y = animate.getCurrentValue() * ratioHeight;
+            }
+        }
+    }
+    
+    if (animate.hasFinishedAnimating()) {
+        controller->staringPoints.pop_back();
+    }
+}
+
+float WaveVboController::StaringPoint::planeDistance(ofPoint point){
+    return sqrt(pow(this->point.x - point.x, 2) + pow(this->point.y - point.y, 2));
 }

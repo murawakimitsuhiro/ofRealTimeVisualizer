@@ -8,7 +8,7 @@
 #pragma once
 
 #include "common.h"
-#include "ofxTween.h"
+#include "ofxAnimatableFloat.h"
 
 #ifndef WaveVboController_hpp
 #define WaveVboController_hpp
@@ -16,19 +16,20 @@
 class WaveVboController{
     class StaringPoint{
     private:
-        float existanceTime;
-        Point point;
+        ofPoint point;
         float height;
         float radius;
+        float gradients;
         ofFloatColor color;
+        ofxAnimatableFloat animate;
     public:
-        StaringPoint(Point point, float height, float radius, ofFloatColor color);
-        void update();
+        StaringPoint(ofPoint point, float height, float radius, ofFloatColor color);
+        void update(WaveVboController*);
+        float planeDistance(ofPoint);
     };
-    
 private:
-    ofSize size; /*size.heightはz軸方向の長さを示す*/
-    Point point;
+    ofSize size;
+    ofPoint point;
     ofVec3f *locationVectors;
     ofVec3f *velocityVectors;
     ofFloatColor *colors;
@@ -36,6 +37,7 @@ private:
     
     ofVbo* vbo;
     DebugOutput* debug;
+    
 public:
     WaveVboController(){};
     WaveVboController(ofSize, ofFloatColor, ofVbo&, DebugOutput&);
@@ -43,7 +45,8 @@ public:
     void draw();
     
     void updateLocation();
-    void emitStaringPoint(Point point, float height, float radius, ofFloatColor color);
+    void emitStaringPoint(ofPoint point, float height, float radius, ofFloatColor color);
+    
 };
 
 #endif /* WaveVboController_hpp */

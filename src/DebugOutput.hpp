@@ -15,6 +15,7 @@ class DebugOutput{
 private:
     std::map<std::string, std::string> propaty;
 public:
+    bool isOutput = true;
     DebugOutput(){};
     void setPropaty(std::string name, std::string value);
     void drawPropaty();

@@ -24,6 +24,7 @@
 #include "rect.h"
 
 //class
+#include "cordinateCalc.cpp"
 #include "DebugOutput.hpp"
 
 #endif /* commonHeader_h */

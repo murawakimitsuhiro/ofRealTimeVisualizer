@@ -27,4 +27,23 @@ struct ofSize{
         return this->width * this->height;
     }
 };
+/*
+struct ofPoint{
+    float x;
+    float y;
+    
+    ofPoint(int x, int y){
+        this->x = x;
+        this->y = y;
+    }
+    
+    ofPoint(){
+        this->x = 0;
+        this->y = 0;
+    }
+    
+    float distance(ofPoint point){
+        return sqrt(pow(this.x - ofPoint.x, 2) + pow(this.y - point.y, 2));
+    }
+};*/
 #endif /* rect_h */
