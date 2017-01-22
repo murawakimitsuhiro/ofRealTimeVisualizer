@@ -13,6 +13,7 @@
 
 class baseScene {
 public:
+    bool isDisplayUI;
     
     virtual void setup(){};
     
@@ -33,7 +34,6 @@ public:
     virtual void mouseReleased(int x, int y, int button){};
     
     virtual void windowResized(int w, int h){};
-    
 };
 
 #endif /* baseScene_h */

@@ -44,18 +44,19 @@ void WaveVboController::update(){
     vbo->updateVertexData(locationVectors, size.getArea());
 }
 
-void WaveVboController::emitStaringPoint(ofPoint point, float height, float radius, ofFloatColor color){
-    staringPoints.push_back(StaringPoint(point, height, radius, color, this));
+void WaveVboController::emitStaringPoint(ofVec2f point, float height, float radius, ofFloatColor color, float spped){
+    staringPoints.push_back(StaringPoint(point, height, radius, color, spped, this));
 }
 
-WaveVboController::StaringPoint::StaringPoint(ofPoint point, float height, float radius, ofFloatColor color, WaveVboController* controller){
+WaveVboController::StaringPoint::StaringPoint(ofVec2f point, float height, float radius, ofFloatColor color,float speed, WaveVboController* controller){
     this->point = point;
     this->height = height;
     this->radius = radius;
+    this->speedCoefficient = speed;
     this->gradients = cordinateMath::gradientsOfQuadraticCurve(radius, height);
     this->color = color;
     
-    const float animDuration = 0.01 * height;
+    const float animDuration = 0.01 * height * speedCoefficient;
     const AnimCurve animCurve = BOUNCE_IN_CUSTOM;
     const AnimRepeat animRepeat = LOOP_BACK_AND_FORTH_ONCE;
     

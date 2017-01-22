@@ -11,8 +11,9 @@
 
 class cordinateMath{
 public:
-    static float distancece(ofVec3f a, ofVec3f b){
-        return sqrt(pow(b.x - a.x, 2) + pow(b.z - a.z, 2));
+    //a = vector3, b = vector2
+    static float distancece(ofVec3f a, ofVec2f b){
+        return sqrt(pow(b.x - a.x, 2) + pow(b.y - a.z, 2));
     }
     
     //return 'a' in "y = a*x^2 + b" from xIntercepts and yIntercepts

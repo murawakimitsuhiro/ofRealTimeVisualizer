@@ -20,15 +20,18 @@
 class WaveVboController{
     class StaringPoint{
     private:
-        ofPoint point;
+        ofVec2f point;
         float height;
         float radius;
+        float speedCoefficient;
+        
         float gradients;
         ofFloatColor color;
         ofxAnimatableFloat animate;
         ofxAnimatableOfColor colorAnimate;
+        
     public:
-        StaringPoint(ofPoint point, float height, float radius, ofFloatColor color, WaveVboController* controller);
+        StaringPoint(ofVec2f point, float height, float radius, ofFloatColor color, float speed, WaveVboController* controller);
         void update(WaveVboController*);
         float planeDistance(ofPoint);
     };
@@ -51,7 +54,7 @@ public:
     void draw();
     
     void updateLocation();
-    void emitStaringPoint(ofPoint point, float height, float radius, ofFloatColor color);
+    void emitStaringPoint(ofVec2f point, float height, float radius, ofFloatColor color, float speed);
 };
 
 #endif /* WaveVboController_hpp */

@@ -11,6 +11,7 @@
 
 #include "common.h"
 
+#include "ofxGui.h"
 #include "DebugOutput.hpp"
 #include "WaveVboController.hpp"
 
@@ -25,11 +26,37 @@ public:
     void draw();
     void keyPressed(int);
     
+    //TrigerKey And Action
+    class WaveEmitKeyAction{
+    public:
+        int trigerKeyNum;
+        ofxPanel emitSettingPanel;
+        ofxLabel trigerKeyLabel;
+        ofxFloatSlider height;
+        ofxVec2Slider position;
+        ofxFloatSlider radius;
+        ofxFloatSlider speed;
+        
+        WaveEmitKeyAction(int);
+        void pressedTrigerKey(WaveScene*);
+    };
+    
 private:
+    bool isSelectingTriger;
+    
 	ofEasyCam cam;
 	ofVbo myVbo;
     DebugOutput debugOutput;
     WaveVboController wave;
+    vector <WaveEmitKeyAction *> waveEmitKeyActions;
+    
+    ofxPanel mainPanel;
+    ofxButton addButton;
+    ofxPanel selectTrigerPanel;
+    
+    void displaySelectTrigerPanel();
+    void addEmitKeyAction(int triger);
+    
 };
 
-#endif /* WaveScene_hpp */
+#endif /* WaveScene_hppk */
