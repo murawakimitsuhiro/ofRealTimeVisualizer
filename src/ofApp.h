@@ -1,11 +1,10 @@
 #pragma once
 
 #include "common.h"
-#include "WaveVboController.hpp"
 #include "ofxXmlSettings.h"
 
-#define WAVE_WIDTH 200
-#define WAVE_HEIGHT 200
+//scenes
+#include "WaveScene.hpp"
 
 class ofApp : public ofBaseApp{
 	
@@ -13,13 +12,19 @@ public:
 	void setup();
 	void update();
 	void draw();
-	void keyPressed  (int key);
+	
+    void keyPressed (int key);
+    void keyReleased(int key);
+    void mouseMoved(int x, int y );
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void windowResized(int w, int h);
     
 private:
     DebugOutput debugOutput;
-	ofEasyCam cam;
-	ofVbo myVbo; 
-    
-    WaveVboController wave;
     ofxXmlSettings xmlSettings;
+    
+    vector <baseScene *> scenes;
+    int currentSceneNum;
 };

@@ -8,8 +8,11 @@
 #pragma once
 
 #include "common.h"
+
 #include "ofxAnimatableFloat.h"
 #include "ofxAnimatableOfColor.h"
+#include "ofxGui.h"
+#include "DebugOutput.hpp"
 
 #ifndef WaveVboController_hpp
 #define WaveVboController_hpp
@@ -49,7 +52,6 @@ public:
     
     void updateLocation();
     void emitStaringPoint(ofPoint point, float height, float radius, ofFloatColor color);
-    
 };
 
 #endif /* WaveVboController_hpp */

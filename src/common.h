@@ -25,6 +25,6 @@
 
 //class
 #include "cordinateCalc.cpp"
-#include "DebugOutput.hpp"
+#include "baseScene.h"
 
 #endif /* commonHeader_h */

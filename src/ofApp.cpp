@@ -1,30 +1,21 @@
 #include "ofApp.h"
 
 void ofApp::setup(){
-    ofBackgroundHex(0x000000);
-    cam.setDistance(100);
     xmlSettings.loadFile("setting.xml");
     
-    this->wave = WaveVboController(ofSize(WAVE_WIDTH, WAVE_HEIGHT), ofFloatColor(0.5, 0.8, 1.0, 1.0), this->myVbo, this->debugOutput);
+    scenes.push_back(new WaveScene());
+    currentSceneNum = 0;
+    scenes[currentSceneNum]->setup();
 }
 
 void ofApp::update(){
     debugOutput.setPropaty("FPS", ofToString(ofGetFrameRate(), 2));
     
-    wave.update();
+    scenes[currentSceneNum]->update();
 }
 
 void ofApp::draw(){
-    ofPushMatrix();
-    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
-    
-    
-    cam.begin();
-    glPointSize(0.5);
-    myVbo.draw(GL_POINTS, 0, WAVE_WIDTH * WAVE_HEIGHT);
-    cam.end();
-    
-    ofPopMatrix();
+    scenes[currentSceneNum]->draw();
     
     debugOutput.drawPropaty();
 }
@@ -35,7 +26,42 @@ void ofApp::keyPressed(int key){
     if (key == 'f') {
         ofToggleFullscreen();
     }
-    if (key == 'h') {
-        this->wave.emitStaringPoint(ofPoint(0, 0), 20, 25, ofFloatColor(0, 0, 0, 1.0));
-    }
+    
+    scenes[currentSceneNum]->keyPressed(key);
+}
+
+void ofApp::keyReleased(int key){
+    
+    scenes[currentSceneNum]->keyReleased(key);
+    
+}
+
+void ofApp::mouseMoved(int x, int y ){
+    
+    scenes[currentSceneNum]->mouseMoved(x, y);
+    
+}
+
+void ofApp::mouseDragged(int x, int y, int button){
+    
+    scenes[currentSceneNum]->mouseDragged(x, y, button);
+    
+}
+
+void ofApp::mousePressed(int x, int y, int button){
+    
+    scenes[currentSceneNum]->mousePressed(x, y, button);
+    
+}
+
+void ofApp::mouseReleased(int x, int y, int button){
+    
+    scenes[currentSceneNum]->mouseReleased(x, y, button);
+    
+}
+
+void ofApp::windowResized(int w, int h){
+    
+    scenes[currentSceneNum]->windowResized(w, h);
+    
 }

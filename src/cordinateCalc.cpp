@@ -11,7 +11,7 @@
 
 class cordinateMath{
 public:
-    static float distancece(ofVec3f a, ofPoint b){
+    static float distancece(ofVec3f a, ofVec3f b){
         return sqrt(pow(b.x - a.x, 2) + pow(b.z - a.z, 2));
     }
     
