@@ -5,6 +5,8 @@
 
 //scenes
 #include "WaveScene.hpp"
+#include "ParticleScene.hpp"
+#include "AudioVisualizerScene.hpp"
 
 class ofApp : public ofBaseApp{
 	
@@ -22,9 +24,16 @@ public:
     void windowResized(int w, int h);
     
 private:
+   //scene
+    vector <baseScene *> scenes;
+    int currentSceneNum;
+    
     DebugOutput debugOutput;
     ofxXmlSettings xmlSettings;
     
-    vector <baseScene *> scenes;
-    int currentSceneNum;
+    ofSoundStream soundStream;
+    float avgSound;
+    float* fftSmoothed;
+    
+    void audioIn(float * input, int bufferSize, int nChannels);
 };

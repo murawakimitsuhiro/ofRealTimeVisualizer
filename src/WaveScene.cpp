@@ -81,7 +81,7 @@ void WaveScene::addEmitKeyAction(int triger){
     waveEmitKeyActions.push_back(new WaveEmitKeyAction(triger));
 }
 
-
+//MARK:- WaveEmitKeyAction
 WaveScene::WaveEmitKeyAction::WaveEmitKeyAction(int trigerKeyNum){
     this->trigerKeyNum = trigerKeyNum;
     

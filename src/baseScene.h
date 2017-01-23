@@ -23,7 +23,12 @@ public:
     
     virtual void keyPressed (int key){};
     
-    virtual void keyReleased(int key){};
+    virtual void keyReleased(int key){
+        if (key == 'f'){
+            isDisplayUI = !isDisplayUI;
+            return;
+        }
+    }
     
     virtual void mouseMoved(int x, int y ){};
     

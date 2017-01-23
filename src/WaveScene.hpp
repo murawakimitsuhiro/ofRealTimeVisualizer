@@ -44,16 +44,22 @@ public:
 private:
     bool isSelectingTriger;
     
+    //Graphics
 	ofEasyCam cam;
 	ofVbo myVbo;
     DebugOutput debugOutput;
     WaveVboController wave;
     vector <WaveEmitKeyAction *> waveEmitKeyActions;
+    float avgSound;
+    float* fftSmoothed;
     
+    //UI
     ofxPanel mainPanel;
     ofxButton addButton;
     ofxPanel selectTrigerPanel;
     
+    
+    //func
     void displaySelectTrigerPanel();
     void addEmitKeyAction(int triger);
     
