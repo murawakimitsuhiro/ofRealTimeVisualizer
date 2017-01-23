@@ -6,12 +6,11 @@ void ofApp::setup(){
     scenes.push_back(new WaveScene());
     scenes.push_back(new ParticleScene());
     scenes.push_back(new AudioVisualizerScene());
+    
     currentSceneNum = 0;
     for (int i = 0; i<scenes.size(); i++){
         scenes[i]->setup();
     }
-    
-    soundStream.setup(this, 0, 1, 44100, 256, 4);
 }
 
 void ofApp::update(){
@@ -40,17 +39,6 @@ void ofApp::keyPressed(int key){
     }
     
     scenes[currentSceneNum]->keyPressed(key);
-}
-
-void ofApp::audioIn(float * input, int bufferSize, int nChannels){
-    avgSound = 0.0;
-    for (int i = 0; i < bufferSize; i++){
-        avgSound += input[i]*input[i]; // 聴覚上は出力の2乗に比例するので、2乗しています。
-    }
-    avgSound /= bufferSize; // 平均を取ります。
-    fftSmoothed = input;
-    
-    cout << nChannels << endl;
 }
 
 void ofApp::keyReleased(int key){

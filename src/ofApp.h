@@ -30,10 +30,4 @@ private:
     
     DebugOutput debugOutput;
     ofxXmlSettings xmlSettings;
-    
-    ofSoundStream soundStream;
-    float avgSound;
-    float* fftSmoothed;
-    
-    void audioIn(float * input, int bufferSize, int nChannels);
 };

@@ -14,7 +14,8 @@ void WaveScene::setup(){
     
     this->isSelectingTriger = false;
     this->isDisplayUI = true;
-    this->wave = WaveVboController(ofSize(WAVE_WIDTH, WAVE_HEIGHT), ofFloatColor(0.5, 0.8, 1.0, 1.0), this->myVbo, this->debugOutput);
+    this->fft.setup(pow(2.0, 12.0));
+    this->wave = WaveVboController(ofSize(WAVE_WIDTH, WAVE_HEIGHT), ofFloatColor(0.5, 0.8, 1.0, 1.0), this->fft, this->myVbo, this->debugOutput);
     
     mainPanel.setup();
     mainPanel.setPosition(ofGetWindowSize().x - mainPanel.getWidth(), 0);
@@ -28,6 +29,7 @@ void WaveScene::setup(){
 }
 
 void WaveScene::update(){
+    fft.update();
     wave.update();
 }
 

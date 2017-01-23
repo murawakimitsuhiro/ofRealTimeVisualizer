@@ -14,6 +14,7 @@
 #include "ofxGui.h"
 #include "DebugOutput.hpp"
 #include "WaveVboController.hpp"
+#include "ofxEasyFft.h"
 
 #define WAVE_WIDTH 200
 #define WAVE_HEIGHT 200
@@ -50,19 +51,17 @@ private:
     DebugOutput debugOutput;
     WaveVboController wave;
     vector <WaveEmitKeyAction *> waveEmitKeyActions;
-    float avgSound;
-    float* fftSmoothed;
+    
+    ofxEasyFft fft;
     
     //UI
     ofxPanel mainPanel;
     ofxButton addButton;
     ofxPanel selectTrigerPanel;
     
-    
     //func
     void displaySelectTrigerPanel();
     void addEmitKeyAction(int triger);
-    
 };
 
 #endif /* WaveScene_hppk */

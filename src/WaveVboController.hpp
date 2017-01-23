@@ -13,6 +13,7 @@
 #include "ofxAnimatableOfColor.h"
 #include "ofxGui.h"
 #include "DebugOutput.hpp"
+#include "ofxEasyFft.h"
 
 #ifndef WaveVboController_hpp
 #define WaveVboController_hpp
@@ -42,14 +43,16 @@ private:
     ofVec3f *locationVectors;
     ofVec3f *velocityVectors;
     ofFloatColor *colors;
+    
     std::vector<StaringPoint> staringPoints;
     
+    ofxEasyFft* fft;
     ofVbo* vbo;
     DebugOutput* debug;
     
 public:
     WaveVboController(){};
-    WaveVboController(ofSize, ofFloatColor, ofVbo&, DebugOutput&);
+    WaveVboController(ofSize, ofFloatColor, ofxEasyFft&, ofVbo&, DebugOutput&);
     void update();
     void draw();
     

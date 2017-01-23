@@ -8,15 +8,17 @@
 
 #include "WaveVboController.hpp"
 
-WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofVbo &vbo, DebugOutput &debugTarget){
+WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofxEasyFft &fft,ofVbo &vbo, DebugOutput &debugTarget){
     this->size = meshSize;
     this->baseColor = ofFloatColor(0.5, 0.8, 1.0, 1.0);
     this->locationVectors = new ofVec3f[meshSize.getArea()];
     this->velocityVectors = new ofVec3f[meshSize.getArea()];
     this->colors = new ofFloatColor[meshSize.getArea()];
+    
     this->staringPoints = {};
+    
+    this->fft = &fft;
     this->vbo = &vbo;
-
     this->debug = &debugTarget;
     
     for (int i = 0; i < size.width; i++) {
@@ -36,6 +38,12 @@ WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofVbo 
 
 void WaveVboController::update(){
     debug->setPropaty("vertexNum", ofToString(size.width*size.height, 0));
+    
+    vector<float> buffer;
+    buffer = fft->getBins();
+    for (int i=0; i<buffer.size(); i++){
+        locationVectors[i].y = buffer[i] * 50;
+    }
     
     for (int i=0; i<staringPoints.size(); i++){
         staringPoints[i].update(this);
