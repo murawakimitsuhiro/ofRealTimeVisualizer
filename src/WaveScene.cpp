@@ -14,7 +14,7 @@ void WaveScene::setup(){
     
     this->isSelectingTriger = false;
     this->isDisplayUI = true;
-    this->fft.setup(pow(2.0, 12.0));
+    this->fft.setup(pow(2.0, 9.0));
     this->wave = WaveVboController(ofSize(WAVE_WIDTH, WAVE_HEIGHT), ofFloatColor(0.5, 0.8, 1.0, 1.0), this->fft, this->myVbo, this->debugOutput);
     
     mainPanel.setup();

@@ -50,6 +50,8 @@ private:
     ofVbo* vbo;
     DebugOutput* debug;
     
+    int updateCount = 1;
+    
 public:
     WaveVboController(){};
     WaveVboController(ofSize, ofFloatColor, ofxEasyFft&, ofVbo&, DebugOutput&);

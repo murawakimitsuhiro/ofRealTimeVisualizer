@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "ofxXmlSettings.h"
+#include "ofxPostGlitch.h"
 
 //scenes
 #include "WaveScene.hpp"
@@ -30,4 +31,7 @@ private:
     
     DebugOutput debugOutput;
     ofxXmlSettings xmlSettings;
+    
+    ofFbo myFbo;
+    ofxPostGlitch myGlitch;
 };
