@@ -14,6 +14,9 @@ void ParticleScene::setup(){
     num.addListener(this, &ParticleScene::onNumChanged);
     friction.addListener(this, &ParticleScene::onFrictionChanged);
     
+    myFbo.allocate(ofGetWindowWidth(), ofGetWindowHeight());
+    myGlitch.setup(&myFbo);
+    
     ofColor minColor = ofColor(0, 0, 0, 0);
     ofColor maxColor = ofColor(255, 255, 255, 255);
     
@@ -89,13 +92,16 @@ void ParticleScene::update(){
         // 画面の端にきたら反対側へ
         particles[i].throughOfWalls();
     }
+    
+    myGlitch.setFx(OFXPOSTGLITCH_GLOW, ofGetKeyPressed());
 }
 
 //--------------------------------------------------------------
 void ParticleScene::draw(){
+    myFbo.begin();
+    
     // 背景
     ofBackground(bgColor);
-    
     // メッシュを点で描く
     mesh.clear();
     ofSetColor(fgColor);
@@ -113,9 +119,15 @@ void ParticleScene::draw(){
     }
     ofCircle(mousePoint.x, mousePoint.y, 4);
     
+    
     if (isDisplayUI){
         gui.draw();
     }
+    
+    myFbo.end();
+    
+    myGlitch.generateFx();
+    myFbo.draw(0,0);
 }
 
 //--------------------------------------------------------------

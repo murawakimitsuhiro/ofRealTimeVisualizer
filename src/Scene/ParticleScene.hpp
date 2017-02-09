@@ -12,6 +12,7 @@
 #include "common.h"
 #include "ofxGui.h"
 #include "Particle.h"
+#include "ofxPostGlitch.h"
 
 class ParticleScene: public baseScene{
 public:
@@ -24,16 +25,19 @@ public:
     void mouseMoved(int x, int y );
     
 private:
-    // パーティクルクラスをインスタンス化
+    // „Éë„Éº„ÉÜ„Ç£„ÇØ„É´„ÇØ„É©„Çπ„Çí„Ç§„É≥„Çπ„Çø„É≥„ÇπÂåñ
     vector<Particle> particles;
-    // メッシュ
+    // „É°„ÉÉ„Ç∑„É•
     ofVboMesh mesh;
-    // 引力が働いているか
+    // ÂºïÂäõ„ÅåÂÉç„ÅÑ„Å¶„ÅÑ„Çã„Åã
     bool atraction;
-    // パーティクルの数
+    // „Éë„Éº„ÉÜ„Ç£„ÇØ„É´„ÅÆÊï∞
     static const int NUM = 100000;
     
     ofVec2f mousePoint;
+    
+    ofFbo myFbo;
+    ofxPostGlitch myGlitch;
     
     // GUI
     ofxPanel gui;
@@ -44,7 +48,7 @@ private:
     ofxColorSlider bgColor;
     ofxColorSlider fgColor;
     
-    // イベントリスナー
+    // „Ç§„Éô„É≥„Éà„É™„Çπ„Éä„Éº
     void onNumChanged(int &num);
     void onFrictionChanged(float &friction);
 };

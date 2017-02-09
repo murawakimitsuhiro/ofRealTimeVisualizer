@@ -6,7 +6,6 @@
 //
 //
 
-//#include "common.h"
 #include "ofMain.h"
 
 class cordinateMath{

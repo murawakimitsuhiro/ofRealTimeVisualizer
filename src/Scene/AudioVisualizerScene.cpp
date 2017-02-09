@@ -53,7 +53,7 @@ void AudioVisualizerScene::setup(){
     // load song
     music.loadSound("sounds/1901_instr.mp3");
     music.setVolume(1.0f);
-    music.play();
+    //music.play();
     music.setLoop(true);
     
     /* === Shooting star VBO === */

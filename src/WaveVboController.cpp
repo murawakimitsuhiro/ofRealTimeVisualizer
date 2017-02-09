@@ -41,13 +41,6 @@ void WaveVboController::update(){
     
     vector<float> buffer;
     buffer = fft->getBins();
-    /*for (int i=0; i<size.width*size.height; i++){
-        if (i < size.width){
-            locationVectors[i].y = buffer[i] * 50;
-        }else{
-            locationVectors[i].y = locationVectors[i-size.width].y;
-        }
-    }*/
     for (int i=size.width*size.height-1; i>=0; i--){
         if (i < size.width){
             locationVectors[i].y = buffer[i] * 50;

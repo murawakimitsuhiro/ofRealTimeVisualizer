@@ -38,7 +38,7 @@ void WaveScene::draw(){
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     
     cam.begin();
-    glPointSize(0.5);
+    glPointSize(0.3);
     myVbo.draw(GL_POINTS, 0, WAVE_WIDTH * WAVE_HEIGHT);
     cam.end();
     

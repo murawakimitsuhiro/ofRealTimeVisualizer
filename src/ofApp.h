@@ -8,6 +8,7 @@
 #include "WaveScene.hpp"
 #include "ParticleScene.hpp"
 #include "AudioVisualizerScene.hpp"
+#include "MidiEffectsScene.hpp"
 
 class ofApp : public ofBaseApp{
 	
