@@ -8,7 +8,7 @@
 
 #include "WaveVboController.hpp"
 
-WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofxEasyFft &fft,ofVbo &vbo, DebugOutput &debugTarget){
+WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofxEasyFft &fft, ofVbo &vbo, DebugOutput &debugTarget){
     this->size = meshSize;
     this->baseColor = ofFloatColor(0.5, 0.8, 1.0, 1.0);
     this->locationVectors = new ofVec3f[meshSize.getArea()];
@@ -39,8 +39,12 @@ WaveVboController::WaveVboController(ofSize meshSize, ofFloatColor color, ofxEas
 void WaveVboController::update(){
     debug->setPropaty("vertexNum", ofToString(size.width*size.height, 0));
     
+    
     vector<float> buffer;
     buffer = fft->getBins();
+    
+    cout << "wave visualize" << fft << endl;
+    
     for (int i=size.width*size.height-1; i>=0; i--){
         if (i < size.width){
             locationVectors[i].y = buffer[i] * 50;

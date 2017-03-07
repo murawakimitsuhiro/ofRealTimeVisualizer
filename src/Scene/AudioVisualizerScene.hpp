@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "Looper.h"
+#include "ofxEasyFft.h"
 
 #define WIDTH 1024
 #define HEIGHT 768
@@ -30,7 +31,10 @@ public:
     ofSoundPlayer music;
     float audioPan, audioPanMax;
     float avgSound;
-    float* fftSmoothed;
+    vector<float> fftSmoothed;
+    vector<float> fftData;
+    ofxEasyFft fft;
+    vector<float> easyFftData;
     int nBandsToGet;
     
     // Drawing

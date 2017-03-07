@@ -3,9 +3,9 @@
 void ofApp::setup(){
     xmlSettings.loadFile("setting.xml");
     
-    scenes.push_back(new WaveScene());
-    scenes.push_back(new ParticleScene());
     scenes.push_back(new AudioVisualizerScene());
+    scenes.push_back(new ParticleScene());
+    scenes.push_back(new WaveScene());
     scenes.push_back(new MidiEffectsScene());
     
     currentSceneNum = 0;

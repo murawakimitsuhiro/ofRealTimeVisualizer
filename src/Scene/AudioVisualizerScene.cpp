@@ -1,5 +1,5 @@
-
 #include "AudioVisualizerScene.hpp"
+
 
 //--------------------------------------------------------------
 void AudioVisualizerScene::setup(){
@@ -9,6 +9,10 @@ void AudioVisualizerScene::setup(){
     ofEnableSmoothing();
     ofLogLevel(OF_LOG_NOTICE);
     ofSetFrameRate(120.0f);
+    
+    //originnal
+    ofSetVerticalSync(true);
+    ofBackground(0);
     
     // init of incrementing values
     count = 0.0f;
@@ -21,7 +25,7 @@ void AudioVisualizerScene::setup(){
     hue = background.getHue();
     
     // allocate fbos and images
-    scene.allocate(WIDTH, HEIGHT);
+    scene.allocate(WIDTH, HEIGHT) ;
     final.allocate(WIDTH, HEIGHT);
     bgFbo.allocate(WIDTH, HEIGHT);
     noise.loadImage("Film_Grain.jpg");
@@ -44,11 +48,15 @@ void AudioVisualizerScene::setup(){
     blur.load("shaders/blur.vert", "shaders/blur.frag");
     
     // FFT initialization
-    fftSmoothed = new float[8192];
+    //fftSmoothed = []//new float[8192];
+    fftSmoothed = {};
     for (int i = 0; i < 8192; i++){
-        fftSmoothed[i] = 0;
+        fftSmoothed.push_back(0);//[i] = 0;
     }
     nBandsToGet = 128;
+    
+    //experience
+    this->fft.setup(pow(2.0, 13.0));
     
     // load song
     music.loadSound("sounds/1901_instr.mp3");
@@ -128,6 +136,7 @@ void AudioVisualizerScene::setup(){
     starVbo.setVertexData(&v[0], 7, GL_STATIC_DRAW);
     starVbo.setColorData(&c[0], 7, GL_STATIC_DRAW);
     starVbo.setIndexData(&Faces[0], 7, GL_STATIC_DRAW);
+    
 }
 
 
@@ -148,8 +157,11 @@ void AudioVisualizerScene::update(){
     
     // update the sound playing system:
     ofSoundUpdate();
-    float* val = ofSoundGetSpectrum(nBandsToGet);
+    float* valf = ofSoundGetSpectrum(nBandsToGet);
     avgSound = 0;
+    
+    fft.update();
+    vector<float> val = fft.getBins();
     
     // smooth fft and calc average volume
     for (int i = 0;i < nBandsToGet; i++){
@@ -191,6 +203,8 @@ void AudioVisualizerScene::update(){
         stars.erase(stars.begin()+(int)ofRandom(stars.size()-1));
     }
     
+    //fftExt
+    easyFftData = fft.getBins();
     
     // stretch out star length
     // "sucked into the vortex"
@@ -207,7 +221,6 @@ void AudioVisualizerScene::update(){
         interp.set(TEAL);
     else
         interp.set(BLUE);
-    
 }
 
 //--------------------------------------------------------------
@@ -220,7 +233,7 @@ void AudioVisualizerScene::draw(){
     texturizer.begin();
     ofSetColor(background, 255);
     ofRect(0, 0, WIDTH, HEIGHT);
-    // pass in noise and texture images
+// pass in noise and texture images
     texturizer.setUniformTexture("uInputTexture1", noise, 0);
     texturizer.setUniformTexture("uInputTexture2", texture, 1);
     texturizer.setUniform2f("uNoiseOffset", ofRandom(WIDTH),  ofRandom(HEIGHT));
@@ -275,7 +288,7 @@ void AudioVisualizerScene::draw(){
         // make star bigger
         glScalef(5, 5, 10);
         glPointSize(10.0f);
-        //ofRotateZ(roll); -> need to set max swing of 30¡
+        //ofRotateZ(roll); -> need to set max swing of 30Á
         ofRotateX(90);
         // spin towards the back of the scene
         ofRotateY(roll);
@@ -337,7 +350,7 @@ void AudioVisualizerScene::draw(){
      glEnd();
      blur.end();
      cam.end();*/
-    
+
     // Draw notification icons for beat detection
     ofSetColor(255, 255, 255, 255);
     ofTranslate(-25, 0);
@@ -352,12 +365,13 @@ void AudioVisualizerScene::draw(){
     ofCircle(1000, 720, symbol);
     
     
-    // draw the fft results:
-    /*ofSetColor(0, 0, 0, 100);
+    /* draw the fft results:
+    ofSetColor(0, 0, 0, 100);
      float width = (float)(5*128) / nBandsToGet;
      for (int i = 0;i < nBandsToGet; i++){
      // (we use negative height here, because we want to flip them
      // because the top corner is 0,0)
      ofRect(100+i*width,HEIGHT-100,width,-(fftSmoothed[i] * 200));
-     }*/
+     }
+     */
 }
