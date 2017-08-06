@@ -17,9 +17,13 @@ public:
     
     virtual void setup(){};
     
+    //virtual void setupInspector(){};
+    
     virtual void update(){};
     
     virtual void draw(){};
+    
+    //virtual void drawInspector(){};
     
     virtual void keyPressed (int key){};
     

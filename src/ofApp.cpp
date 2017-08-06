@@ -10,8 +10,17 @@ void ofApp::setup(){
     
     currentSceneNum = 0;
     for (int i = 0; i<scenes.size(); i++){
-        scenes[i]->setup();
+        /*ShpereVisulaliserScene *shpere = dynamic_cast<ShpereVisulaliserScene *>(scenes[i]);
+        if (shpere != NULL) {
+            shpere->setup(*this);
+        } else {*/
+            scenes[i]->setup();
+        //}
     }
+}
+
+void ofApp::setupInspector() {
+    ofSetBackgroundColor(0.87, 0.87, 0.87);
 }
 
 void ofApp::update(){
@@ -22,6 +31,10 @@ void ofApp::update(){
 void ofApp::draw(){
     scenes[currentSceneNum]->draw();
     
+    debugOutput.drawPropaty();
+}
+
+void ofApp::drawInspector(ofEventArgs &args) {
     debugOutput.drawPropaty();
 }
 

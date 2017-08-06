@@ -14,8 +14,10 @@ class ofApp : public ofBaseApp{
 	
 public:
 	void setup();
+    void setupInspector();
 	void update();
 	void draw();
+    void drawInspector(ofEventArgs & args);
 	
     void keyPressed (int key);
     void keyReleased(int key);
