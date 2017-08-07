@@ -4,11 +4,13 @@
 #include "Looper.h"
 #include "ofxEasyFft.h"
 
+/*
 #define WIDTH 1024
 #define HEIGHT 768
 #define HALF_WIDTH 512
 #define HALF_HEIGHT 384
-
+*/
+ 
 #define PINK 196, 0, 118
 #define PURPLE 76, 0, 183
 #define TEAL 24, 178, 198
@@ -25,6 +27,7 @@ public:
     void update();
     void draw();
     void dragEvent(ofDragInfo dragInfo);
+    void windowResized(int w, int h);
     void gotMessage(ofMessage msg);
     
     // Audio
@@ -42,6 +45,12 @@ public:
     ofImage texture, noise;
     ofShader shader, texturizer, blur;
     float blurScale;
+    
+    // window State
+    float width = 600;
+    float height = 600;
+    float halfWidth = 0;
+    float halfHeight = 0;
     
     // Particles
     ofPolyline circle, tracer, wave;

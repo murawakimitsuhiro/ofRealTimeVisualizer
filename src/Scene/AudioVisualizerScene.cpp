@@ -25,15 +25,15 @@ void AudioVisualizerScene::setup(){
     hue = background.getHue();
     
     // allocate fbos and images
-    scene.allocate(WIDTH, HEIGHT) ;
-    final.allocate(WIDTH, HEIGHT);
-    bgFbo.allocate(WIDTH, HEIGHT);
+    scene.allocate(width, height) ;
+    final.allocate(width, height);
+    bgFbo.allocate(width, height);
     noise.loadImage("Film_Grain.jpg");
     texture.loadImage("vignette.jpg");
     //blurScale = 1 / 9;
     
     // create circle outline for "random" particles to follow
-    ofPoint p(WIDTH/2, HEIGHT/2);
+    ofPoint p(width/2, height/2);
     circle.arc(p,200,200,0,360,40);
     circle = circle.getResampledBySpacing(4);
     
@@ -198,7 +198,7 @@ void AudioVisualizerScene::update(){
     
     // add shooting stars when symbol is hit
     if(fftSmoothed[27] > 0.05f) {
-        stars.push_back(ofPoint(ofRandom(1)*WIDTH, ofRandom(1)*HEIGHT, ofRandom(-200, -500)));
+        stars.push_back(ofPoint(ofRandom(1)*width, ofRandom(1)*height, ofRandom(-200, -500)));
     } else if (stars.size() > 0) {
         stars.erase(stars.begin()+(int)ofRandom(stars.size()-1));
     }
@@ -232,19 +232,19 @@ void AudioVisualizerScene::draw(){
     bgFbo.begin();
     texturizer.begin();
     ofSetColor(background, 255);
-    ofRect(0, 0, WIDTH, HEIGHT);
+    ofRect(0, 0, width, height);
 // pass in noise and texture images
     texturizer.setUniformTexture("uInputTexture1", noise, 0);
     texturizer.setUniformTexture("uInputTexture2", texture, 1);
-    texturizer.setUniform2f("uNoiseOffset", ofRandom(WIDTH),  ofRandom(HEIGHT));
+    texturizer.setUniform2f("uNoiseOffset", ofRandom(width),  ofRandom(height));
     texturizer.setUniform3f("uColor", background.r, background.g, background.b);
     // set alpha for ghosting effect
     texturizer.setUniform1f("uAlpha", 0.2);
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);				glVertex2f(0, 0);
-    glTexCoord2f(WIDTH, 0);			glVertex2f(WIDTH, 0);
-    glTexCoord2f(WIDTH, HEIGHT);	glVertex2f(WIDTH, HEIGHT);
-    glTexCoord2f(0, HEIGHT);		glVertex2f(0, HEIGHT);
+    glTexCoord2f(width, 0);			glVertex2f(width, 0);
+    glTexCoord2f(width, height);	glVertex2f(width, height);
+    glTexCoord2f(0, height);		glVertex2f(0, height);
     glEnd();
     texturizer.end();
     bgFbo.end();
@@ -253,15 +253,15 @@ void AudioVisualizerScene::draw(){
     scene.begin();
     ofPushMatrix();
     // draw textured background from above
-    bgFbo.draw(0, 0, WIDTH, HEIGHT);
+    bgFbo.draw(0, 0, width, height);
     
     ofSetColor(255, 255);
     // move to center of screen for rotation
-    ofTranslate(WIDTH/2, HEIGHT/2);
+    ofTranslate(width/2, height/2);
     // rotate to beat of the snare (fftSmoothed[7])
     ofRotate(count*3);
     // move back to corner to draw
-    ofTranslate(-WIDTH/2, -HEIGHT/2);
+    ofTranslate(-width/2, -height/2);
     
     // draw scattered points
     vector<ofPoint>vertices = circle.getVertices();
@@ -315,7 +315,7 @@ void AudioVisualizerScene::draw(){
     
     scene.end(); // end main content fbo
     
-    cam.setTarget(ofVec3f(WIDTH/2, HEIGHT/2, 0));
+    cam.setTarget(ofVec3f(width/2, height/2, 0));
     
     ofClear(0, 0, 0, 1);
     shader.begin();
@@ -326,9 +326,9 @@ void AudioVisualizerScene::draw(){
     // draw to screen
     glBegin(GL_QUADS);
     glTexCoord2f(0, 0);				glVertex2f(0, 0);
-    glTexCoord2f(WIDTH, 0);			glVertex2f(WIDTH, 0);
-    glTexCoord2f(WIDTH, HEIGHT);	glVertex2f(WIDTH, HEIGHT);
-    glTexCoord2f(0, HEIGHT);		glVertex2f(0, HEIGHT);
+    glTexCoord2f(width, 0);			glVertex2f(width, 0);
+    glTexCoord2f(width, height);	glVertex2f(width, height);
+    glTexCoord2f(0, height);		glVertex2f(0, height);
     glEnd();
     shader.end();
     
@@ -374,4 +374,9 @@ void AudioVisualizerScene::draw(){
      ofRect(100+i*width,HEIGHT-100,width,-(fftSmoothed[i] * 200));
      }
      */
+}
+
+void AudioVisualizerScene::windowResized(int w, int h) {
+    width = float(w);
+    height = float(h);
 }

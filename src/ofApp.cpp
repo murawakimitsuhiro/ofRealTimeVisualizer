@@ -36,6 +36,8 @@ void ofApp::draw(){
 
 void ofApp::drawInspector(ofEventArgs &args) {
     debugOutput.drawPropaty();
+    
+    scenes[currentSceneNum]->drawInspector();
 }
 
 void ofApp::keyPressed(int key){
